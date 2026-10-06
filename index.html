@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flexbox vs Grid</title>
+
+  <script>
+    var q = new URLSearchParams(location.search);
+    var layout = q.get('layout') === 'grid' ? 'grid' : 'flexbox';
+    document.write('<link rel="stylesheet" href="css/' + layout + '-style.css">');
+  </script>
+  <noscript><link rel="stylesheet" href="css/flexbox-style.css"></noscript>
+
+  <style>
+    .dev-switcher{position:fixed;right:8px;bottom:8px;z-index:9999;padding:6px 10px;background:#111;color:#fff;font:12px/1.4 system-ui,sans-serif;border-radius:6px}
+    .dev-switcher a{color:#9cf;margin:0 4px}
+  </style>
+</head>
+
+<body>
+  <script>
+    var level = ['1', '2', '3', '4'].includes(q.get('level')) ? q.get('level') : '1';
+    document.body.dataset.layout = layout;
+    document.body.classList.add('level-' + level);
+  </script>
+
+  <header class="site-header">
+    <a class="logo" href="#">Logo</a>
+    <h1>Header</h1>
+    <div class="user-menu">
+      <button type="button">User</button>
+    </div>
+  </header>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-body">
+    <aside class="sidebar sidebar-left" id="sidebar-left" aria-label="Left sidebar">
+      <button type="button" class="collapse-btn" aria-controls="sidebar-left" aria-expanded="true">Toggle</button>
+      <h2>Left Sidebar</h2>
+      <p>Links, filters or secondary navigation.</p>
+    </aside>
+
+    <main class="main-content">
+      <h2>Main Content</h2>
+      <p>Replace this with your own content.</p>
+
+      <section class="cards" aria-label="Cards">
+        <article class="card"><h3>Flexbox basics</h3><p>Arranges items in one direction, either a row or a column.</p></article>
+        <article class="card"><h3>Grid basics</h3><p>Controls rows and columns together using named areas.</p></article>
+        <article class="card"><h3>Responsive design</h3><p>Layouts adapt to phones, tablets and desktops with media queries.</p></article>
+        <article class="card"><h3>Alignment</h3><p>Centre and space items with justify-content and align-items.</p></article>
+        <article class="card"><h3>Named areas</h3><p>Grid template areas make the page structure easy to read.</p></article>
+        <article class="card"><h3>Mobile first</h3><p>Start with the stacked mobile layout, then add larger breakpoints.</p></article>
+      </section>
+    </main>
+
+    <aside class="sidebar sidebar-right" id="sidebar-right" aria-label="Right sidebar">
+      <button type="button" class="collapse-btn" aria-controls="sidebar-right" aria-expanded="true">Toggle</button>
+      <h2>Right Sidebar</h2>
+      <p>Ads, related links or extra info.</p>
+    </aside>
+  </div>
+
+  <footer class="site-footer">
+    <section class="footer-section">
+      <h2>Company</h2>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </section>
+    <section class="footer-section">
+      <h2>Resources</h2>
+      <ul>
+        <li><a href="#">Docs</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </section>
+    <section class="footer-section">
+      <h2>Legal</h2>
+      <ul>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </section>
+  </footer>
+
+  <div class="dev-switcher">
+    Flexbox:
+    <a href="?layout=flexbox&level=1">L1</a><a href="?layout=flexbox&level=2">L2</a><a href="?layout=flexbox&level=3">L3</a><a href="?layout=flexbox&level=4">L4</a>
+    | Grid:
+    <a href="?layout=grid&level=1">L1</a><a href="?layout=grid&level=2">L2</a><a href="?layout=grid&level=3">L3</a><a href="?layout=grid&level=4">L4</a>
+  </div>
+
+  <script>
+    document.querySelectorAll('.collapse-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var sidebar = document.getElementById(btn.getAttribute('aria-controls'));
+        var collapsed = sidebar.classList.toggle('is-collapsed');
+        btn.setAttribute('aria-expanded', String(!collapsed));
+      });
+    });
+  </script>
+</body>
+</html>
