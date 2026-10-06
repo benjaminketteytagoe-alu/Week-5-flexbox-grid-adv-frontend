@@ -1,0 +1,25 @@
+{
+  "name": "week-5-flexbox-grid-adv-frontend",
+  "version": "1.0.0",
+  "description": "This learning activity will guide students through creating the same page layout using both Flexbox and CSS Grid. By implementing identical layouts with different techniques, students will develop a deep understanding of when and how to use each approach effectively.",
+  "main": "index.js",
+  "scripts": {
+    "sass:build": "sass src/scss/flexbox-style.scss dist/flexbox-style.css --style=expanded && sass src/scss/grid-style.scss dist/grid-style.css --style=expanded",
+    "sass:watch": "sass --watch src/scss:dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjaminketteytagoe-alu/Week-5-flexbox-grid-adv-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/benjaminketteytagoe-alu/Week-5-flexbox-grid-adv-frontend/issues"
+  },
+  "homepage": "https://github.com/benjaminketteytagoe-alu/Week-5-flexbox-grid-adv-frontend#readme",
+  "devDependencies": {
+    "sass-loader": "^16.0.8"
+  }
+}
