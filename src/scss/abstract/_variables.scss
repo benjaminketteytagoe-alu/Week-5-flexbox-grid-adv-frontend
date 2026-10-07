@@ -1,0 +1,29 @@
+// Breakpoints 
+$bp-xl: 1199px;   // 1: narrower sidebars
+$bp-lg: 991px;    // 2: tablet, sidebars drop below main
+$bp-md: 767px;    // 3: mobile, everything stacks
+$bp-sm: 479px;    // 4: small phones
+$bp-lg-up: 992px; // desktop and above
+
+@mixin down($w) { @media (max-width: $w) { @content; } }
+@mixin up($w)   { @media (min-width: $w) { @content; } }
+
+// Level 4 custom properties
+body.level-4 {
+  --header-height: 4rem;
+  --sidebar-width: clamp(11rem, 18vw, 15rem);
+  --sidebar-collapsed: 3rem;
+  --gap: clamp(0.5rem, 1.5vw, 1.25rem);
+  --pad: clamp(0.75rem, 2vw, 1.5rem);
+  --card-min: clamp(12rem, 22vw, 16rem);
+
+  --color-bg: #f3f4f6;
+  --color-panel: #ffffff;
+  --color-dark: #111827;
+  --color-accent: #2563eb;
+  --color-text: #1f2937;
+  --color-border: #d1d5db;
+
+  @include down($bp-xl) { --sidebar-width: clamp(9rem, 16vw, 12rem); }
+  @include down($bp-sm) { --header-height: 3.25rem; }
+}
