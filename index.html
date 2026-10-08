@@ -8,9 +8,9 @@
   <script>
     var q = new URLSearchParams(location.search);
     var layout = q.get('layout') === 'grid' ? 'grid' : 'flexbox';
-    document.write('<link rel="stylesheet" href="css/' + layout + '-style.css">');
+    document.write('<link rel="stylesheet" href="dist/' + layout + '-style.css">');
   </script>
-  <noscript><link rel="stylesheet" href="css/flexbox-style.css"></noscript>
+  <noscript><link rel="stylesheet" href="dist/flexbox-style.css"></noscript>
 
   <style>
     .dev-switcher{position:fixed;right:8px;bottom:8px;z-index:9999;padding:6px 10px;background:#111;color:#fff;font:12px/1.4 system-ui,sans-serif;border-radius:6px}
