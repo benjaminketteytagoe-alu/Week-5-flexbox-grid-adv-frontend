@@ -1,3 +1,782 @@
+body.level-4 {
+  --header-height: 4rem;
+  --sidebar-width: clamp(11rem, 18vw, 15rem);
+  --sidebar-collapsed: 3rem;
+  --gap: clamp(0.5rem, 1.5vw, 1.25rem);
+  --pad: clamp(0.75rem, 2vw, 1.5rem);
+  --card-min: clamp(12rem, 22vw, 16rem);
+  --color-bg: #f3f4f6;
+  --color-panel: #ffffff;
+  --color-dark: #111827;
+  --color-accent: #2563eb;
+  --color-text: #1f2937;
+  --color-border: #d1d5db;
+}
+@media (max-width: 1199px) {
+  body.level-4 {
+    --sidebar-width: clamp(9rem, 16vw, 12rem);
+  }
+}
+@media (max-width: 479px) {
+  body.level-4 {
+    --header-height: 3.25rem;
+  }
+}
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+/**
+ * Module: Level 1 Layout
+ * Description: Implements the basic page layout using Flexbox and CSS Grid.
+ *
+ * Flexbox: Body as a flex column with header, main content, and footer.
+ * Grid: Body as a grid with auto/1fr/auto rows.
+ * Responsive: Stacks all sections on smaller screens.
+ */
+/* =========================================
+   LEVEL 1: SHARED APPEARANCE
+   ========================================= */
+body.level-1 {
+  --gap: clamp(0.5rem, 1.5vw, 1rem);
+  --pad: clamp(0.75rem, 2vw, 1.5rem);
+  --card-min: clamp(12rem, 22vw, 16rem);
+  --color-bg: #f3f4f6;
+  --color-panel: #ffffff;
+  --color-dark: #111827;
+  --color-accent: #2563eb;
+  --color-text: #1f2937;
+  --color-border: #d1d5db;
+  font-family: system-ui, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+body.level-1 .site-nav,
+body.level-1 .sidebar-left,
+body.level-1 .sidebar-right {
+  display: none;
+}
+body.level-1 .site-header {
+  padding: var(--pad);
+  background: var(--color-dark);
+  color: #fff;
+}
+body.level-1 .logo {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+body.level-1 h1 {
+  margin: 0;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+}
+body.level-1 .user-menu button {
+  font: inherit;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  background: var(--color-panel);
+}
+body.level-1 .main-content {
+  padding: var(--pad);
+  background: var(--color-panel);
+}
+body.level-1 .main-content > h2 {
+  margin-top: 0;
+}
+body.level-1 .card {
+  padding: var(--pad);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+}
+body.level-1 .card h3, body.level-1 .card p {
+  margin: 0 0 0.5rem;
+}
+body.level-1 .site-footer {
+  padding: var(--pad);
+  background: var(--color-dark);
+  color: #fff;
+}
+body.level-1 .footer-section h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+body.level-1 .footer-section ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+body.level-1 .footer-section a {
+  color: #9cf;
+}
+
+/* =========================================
+   LEVEL 1: FLEXBOX LAYOUT
+   ========================================= */
+body[data-layout=flexbox].level-1 {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+body[data-layout=flexbox].level-1 .site-header {
+  flex: 0 0 auto;
+}
+body[data-layout=flexbox].level-1 .main-content {
+  flex: 1 0 auto;
+}
+body[data-layout=flexbox].level-1 .site-footer {
+  flex: 0 0 auto;
+}
+body[data-layout=flexbox].level-1 .cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+body[data-layout=flexbox].level-1 .card {
+  flex: 1 1 calc(50% - 16px);
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* =========================================
+   LEVEL 1: CSS GRID LAYOUT
+   ========================================= */
+body[data-layout=grid].level-1 {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: "header" "main" "footer";
+  min-height: 100vh;
+}
+body[data-layout=grid].level-1 .site-header {
+  grid-area: header;
+}
+body[data-layout=grid].level-1 .main-content {
+  grid-area: main;
+}
+body[data-layout=grid].level-1 .site-footer {
+  grid-area: footer;
+}
+body[data-layout=grid].level-1 .cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+body[data-layout=grid].level-1 .card {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* =========================================
+   RESPONSIVE MOBILE LAYOUT
+   ========================================= */
+@media (max-width: 768px) {
+  body[data-layout=flexbox].level-1 .cards {
+    flex-direction: column;
+  }
+  body[data-layout=flexbox].level-1 .card {
+    width: 100%;
+    flex-basis: auto;
+  }
+  body[data-layout=grid].level-1 .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+/**
+ * Module: Level 2 Layout
+ * Description: Implements responsive multi-column layouts using
+ * Flexbox and CSS Grid.
+ *
+ * Flexbox: Header, nav, then a flex row of main (70%) + right sidebar (30%), then footer.
+ * Grid: Header, nav, then a grid row of 7fr + 3fr for main + sidebar, then footer.
+ * Responsive: Stacks all sections on smaller screens.
+ */
+/* =========================================
+   LEVEL 2: SHARED APPEARANCE
+   ========================================= */
+body.level-2 {
+  --gap: clamp(0.5rem, 1.5vw, 1rem);
+  --pad: clamp(0.75rem, 2vw, 1.5rem);
+  --card-min: clamp(12rem, 22vw, 16rem);
+  --color-bg: #f3f4f6;
+  --color-panel: #ffffff;
+  --color-dark: #111827;
+  --color-accent: #2563eb;
+  --color-text: #1f2937;
+  --color-border: #d1d5db;
+  font-family: system-ui, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+body.level-2 .sidebar-left {
+  display: none;
+}
+body.level-2 .site-header {
+  padding: var(--pad);
+  background: var(--color-dark);
+  color: #fff;
+}
+body.level-2 .logo {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+body.level-2 h1 {
+  margin: 0;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+}
+body.level-2 .user-menu button {
+  font: inherit;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  background: var(--color-panel);
+}
+body.level-2 .site-nav {
+  background: var(--color-accent);
+}
+body.level-2 .site-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem var(--pad);
+  gap: 0.5rem;
+}
+body.level-2 .site-nav a {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 0.25rem;
+}
+body.level-2 .site-nav a:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+body.level-2 .sidebar,
+body.level-2 .main-content {
+  padding: var(--pad);
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+}
+body.level-2 .main-content > h2 {
+  margin-top: 0;
+}
+body.level-2 .card {
+  padding: var(--pad);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+}
+body.level-2 .card h3, body.level-2 .card p {
+  margin: 0 0 0.5rem;
+}
+body.level-2 .site-footer {
+  padding: var(--pad);
+  background: var(--color-dark);
+  color: #fff;
+}
+body.level-2 .footer-section h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+body.level-2 .footer-section ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+body.level-2 .footer-section a {
+  color: #9cf;
+}
+
+/* =========================================
+   LEVEL 2: FLEXBOX LAYOUT
+   ========================================= */
+body[data-layout=flexbox].level-2 .page-body {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap);
+  padding: var(--pad);
+}
+body[data-layout=flexbox].level-2 .main-content {
+  flex: 0 0 70%;
+  min-width: 0;
+}
+body[data-layout=flexbox].level-2 .sidebar-right {
+  flex: 0 0 30%;
+  min-width: 0;
+}
+body[data-layout=flexbox].level-2 .cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+body[data-layout=flexbox].level-2 .card {
+  flex: 1 1 calc(50% - 16px);
+  min-width: 0;
+  box-sizing: border-box;
+}
+body[data-layout=flexbox].level-2 .site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+}
+body[data-layout=flexbox].level-2 .footer-section {
+  flex: 1 1 calc(50% - var(--gap));
+  min-width: 0;
+}
+
+/* =========================================
+   LEVEL 2: CSS GRID LAYOUT
+   ========================================= */
+body[data-layout=grid].level-2 .page-body {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  align-items: start;
+  gap: var(--gap);
+  padding: var(--pad);
+}
+body[data-layout=grid].level-2 .main-content {
+  grid-column: 1;
+  min-width: 0;
+}
+body[data-layout=grid].level-2 .sidebar-right {
+  grid-column: 2;
+}
+body[data-layout=grid].level-2 .cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+body[data-layout=grid].level-2 .card {
+  min-width: 0;
+  box-sizing: border-box;
+}
+body[data-layout=grid].level-2 .site-footer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap);
+}
+
+/* =========================================
+   RESPONSIVE MOBILE LAYOUT
+   ========================================= */
+@media (max-width: 768px) {
+  body[data-layout=flexbox].level-2 .site-nav ul {
+    flex-direction: column;
+  }
+  body[data-layout=flexbox].level-2 .page-body {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  body[data-layout=flexbox].level-2 .main-content,
+  body[data-layout=flexbox].level-2 .sidebar-right {
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  body[data-layout=flexbox].level-2 .cards {
+    flex-direction: column;
+  }
+  body[data-layout=flexbox].level-2 .card {
+    width: 100%;
+    flex-basis: auto;
+  }
+  body[data-layout=flexbox].level-2 .site-footer {
+    flex-direction: column;
+  }
+  body[data-layout=flexbox].level-2 .footer-section {
+    width: 100%;
+    flex-basis: auto;
+  }
+  body[data-layout=grid].level-2 .site-nav ul {
+    flex-direction: column;
+  }
+  body[data-layout=grid].level-2 .page-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  body[data-layout=grid].level-2 .main-content,
+  body[data-layout=grid].level-2 .sidebar-right {
+    grid-column: 1;
+  }
+  body[data-layout=grid].level-2 .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  body[data-layout=grid].level-2 .site-footer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+body.level-3 {
+  --gap: clamp(0.5rem, 1.5vw, 1rem);
+  --pad: clamp(0.75rem, 2vw, 1.5rem);
+  --card-min: clamp(12rem, 22vw, 16rem);
+  --color-bg: #f3f4f6;
+  --color-panel: #ffffff;
+  --color-dark: #111827;
+  --color-accent: #2563eb;
+  --color-text: #1f2937;
+  --color-border: #d1d5db;
+  font-family: system-ui, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+body.level-3 .collapse-btn {
+  display: none;
+}
+body.level-3 .site-header {
+  padding: var(--pad);
+  background: var(--color-dark);
+  color: #fff;
+}
+body.level-3 .logo {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+body.level-3 h1 {
+  margin: 0;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+}
+body.level-3 .user-menu button {
+  font: inherit;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  background: var(--color-panel);
+}
+body.level-3 .site-nav {
+  background: var(--color-accent);
+}
+body.level-3 .site-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem var(--pad);
+}
+body.level-3 .site-nav a {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  text-decoration: none;
+}
+body.level-3 .sidebar,
+body.level-3 .main-content {
+  padding: var(--pad);
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+}
+body.level-3 .main-content > h2 {
+  margin-top: 0;
+}
+body.level-3 .card {
+  padding: var(--pad);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+}
+body.level-3 .card h3, body.level-3 .card p {
+  margin: 0 0 0.5rem;
+}
+body.level-3 .site-footer {
+  padding: var(--pad);
+  background: var(--color-dark);
+  color: #fff;
+}
+body.level-3 .footer-section h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+body.level-3 .footer-section ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+body.level-3 .footer-section a {
+  color: #9cf;
+}
+
+body.level-3 {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas: "header header header" "nav    nav    nav" "left   main   right" "footer footer footer";
+}
+body.level-3 .page-body {
+  display: contents;
+}
+body.level-3 .site-header {
+  grid-area: header;
+}
+body.level-3 .site-nav {
+  grid-area: nav;
+}
+body.level-3 .sidebar-left {
+  grid-area: left;
+}
+body.level-3 .main-content {
+  grid-area: main;
+  min-width: 0;
+}
+body.level-3 .sidebar-right {
+  grid-area: right;
+}
+body.level-3 .site-footer {
+  grid-area: footer;
+}
+body.level-3 .site-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  column-gap: var(--gap);
+}
+body.level-3 .user-menu {
+  justify-self: end;
+}
+body.level-3 .site-nav ul {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: center;
+  gap: var(--gap);
+}
+body.level-3 .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min)), 1fr));
+  gap: var(--gap);
+}
+body.level-3 .site-footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+@media (max-width: 991px) {
+  body.level-3 {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto 1fr auto;
+    grid-template-areas: "header header" "nav    nav" "main   main" "left   right" "footer footer";
+  }
+}
+@media (max-width: 767px) {
+  body.level-3 {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: "header" "nav" "main" "left" "right" "footer";
+  }
+  body.level-3 .site-footer {
+    grid-template-columns: 1fr;
+  }
+  body.level-3 .site-nav ul {
+    grid-auto-flow: row;
+    gap: 0;
+  }
+}
+
+body.level-4 {
+  font-family: system-ui, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+body.level-4 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  min-height: var(--header-height);
+  padding-inline: var(--pad);
+  background: var(--color-dark);
+  color: #fff;
+}
+body.level-4 .logo {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+body.level-4 h1 {
+  margin: 0;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+}
+body.level-4 .user-menu button,
+body.level-4 .collapse-btn {
+  font: inherit;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  background: var(--color-panel);
+  cursor: pointer;
+}
+body.level-4 .site-nav {
+  background: var(--color-accent);
+}
+body.level-4 .site-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem var(--pad);
+}
+body.level-4 .site-nav a {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+}
+body.level-4 .sidebar,
+body.level-4 .main-content {
+  padding: var(--pad);
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+}
+body.level-4 .main-content > h2 {
+  margin-top: 0;
+}
+body.level-4 .sidebar > * {
+  margin: 0 0 0.75rem;
+}
+body.level-4 .sidebar.is-collapsed > :not(.collapse-btn) {
+  display: none;
+}
+body.level-4 .card {
+  padding: var(--pad);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+}
+body.level-4 .card h3, body.level-4 .card p {
+  margin: 0 0 0.5rem;
+}
+body.level-4 .site-footer {
+  padding: var(--pad);
+  background: var(--color-dark);
+  color: #fff;
+}
+body.level-4 .footer-section h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+body.level-4 .footer-section ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+body.level-4 .footer-section a {
+  color: #9cf;
+}
+@media (min-width: 992px) {
+  body.level-4 .sidebar.is-collapsed {
+    padding-inline: 0;
+  }
+  body.level-4 .sidebar.is-collapsed .collapse-btn {
+    writing-mode: vertical-rl;
+    margin: 0;
+  }
+}
+
+body.level-4 {
+  display: grid;
+  min-height: 100vh;
+  gap: var(--gap);
+  grid-template-columns: var(--left-col, var(--sidebar-width)) minmax(0, 1fr) var(--right-col, var(--sidebar-width));
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas: "header header header" "nav    nav    nav" "left   main   right" "footer footer footer";
+  transition: grid-template-columns 0.3s ease;
+}
+body.level-4:has(.sidebar-left.is-collapsed) {
+  --left-col: var(--sidebar-collapsed);
+}
+body.level-4:has(.sidebar-right.is-collapsed) {
+  --right-col: var(--sidebar-collapsed);
+}
+body.level-4 .page-body {
+  display: contents;
+}
+body.level-4 .site-header {
+  grid-area: header;
+}
+body.level-4 .site-nav {
+  grid-area: nav;
+}
+body.level-4 .sidebar-left {
+  grid-area: left;
+}
+body.level-4 .main-content {
+  grid-area: main;
+  min-width: 0;
+}
+body.level-4 .sidebar-right {
+  grid-area: right;
+}
+body.level-4 .site-footer {
+  grid-area: footer;
+}
+body.level-4 .site-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  column-gap: var(--gap);
+}
+body.level-4 .user-menu {
+  justify-self: end;
+}
+body.level-4 .site-nav ul {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: center;
+  gap: var(--gap);
+}
+body.level-4 .sidebar {
+  display: grid;
+  align-content: start;
+  overflow: hidden;
+}
+body.level-4 .collapse-btn {
+  justify-self: end;
+}
+body.level-4 .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min)), 1fr));
+  gap: var(--gap);
+}
+@supports (grid-template-rows: subgrid) {
+  body.level-4 .card {
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+  }
+}
+body.level-4 .site-footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+@media (min-width: 992px) {
+  body.level-4 .sidebar.is-collapsed .collapse-btn {
+    justify-self: center;
+  }
+}
+@media (max-width: 991px) {
+  body.level-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto auto 1fr auto;
+    grid-template-areas: "header header" "nav    nav" "main   main" "left   right" "footer footer";
+  }
+}
+@media (max-width: 767px) {
+  body.level-4 {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(6, auto);
+    grid-template-areas: "header" "nav" "main" "left" "right" "footer";
+  }
+}
+@media (max-width: 479px) {
+  body.level-4 .site-nav ul {
+    grid-auto-flow: row;
+    gap: 0;
+  }
+  body.level-4 .site-footer {
+    grid-template-columns: 1fr;
+  }
+}
 
 /*# sourceMappingURL=grid-style.css.map */

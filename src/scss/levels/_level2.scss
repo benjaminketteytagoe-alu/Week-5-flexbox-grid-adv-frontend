@@ -3,10 +3,96 @@
  * Description: Implements responsive multi-column layouts using
  * Flexbox and CSS Grid.
  *
- * Flexbox: Uses a horizontal flex container on larger screens.
- * Grid: Uses three columns on larger screens.
- * Responsive: Stacks the sections on smaller screens.
+ * Flexbox: Header, nav, then a flex row of main (70%) + right sidebar (30%), then footer.
+ * Grid: Header, nav, then a grid row of 7fr + 3fr for main + sidebar, then footer.
+ * Responsive: Stacks all sections on smaller screens.
  */
+
+/* =========================================
+   LEVEL 2: SHARED APPEARANCE
+   ========================================= */
+
+body.level-2 {
+  --gap: clamp(0.5rem, 1.5vw, 1rem);
+  --pad: clamp(0.75rem, 2vw, 1.5rem);
+  --card-min: clamp(12rem, 22vw, 16rem);
+  --color-bg: #f3f4f6;
+  --color-panel: #ffffff;
+  --color-dark: #111827;
+  --color-accent: #2563eb;
+  --color-text: #1f2937;
+  --color-border: #d1d5db;
+
+  font-family: system-ui, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+
+  // Hide left sidebar for Level 2 (README specifies only a right sidebar)
+  .sidebar-left {
+    display: none;
+  }
+
+  .site-header {
+    padding: var(--pad);
+    background: var(--color-dark);
+    color: #fff;
+  }
+  .logo { color: inherit; font-weight: 700; text-decoration: none; }
+  h1 { margin: 0; font-size: clamp(1rem, 2.5vw, 1.5rem); }
+  .user-menu button {
+    font: inherit;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.25rem;
+    background: var(--color-panel);
+  }
+
+  .site-nav { background: var(--color-accent); }
+  .site-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem var(--pad);
+    gap: 0.5rem;
+  }
+  .site-nav a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 0.25rem;
+  }
+  .site-nav a:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .sidebar,
+  .main-content {
+    padding: var(--pad);
+    background: var(--color-panel);
+    border: 1px solid var(--color-border);
+  }
+  .main-content > h2 { margin-top: 0; }
+
+  .card {
+    padding: var(--pad);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+  }
+  .card h3, .card p { margin: 0 0 0.5rem; }
+
+  .site-footer {
+    padding: var(--pad);
+    background: var(--color-dark);
+    color: #fff;
+  }
+  .footer-section h2 { margin: 0 0 0.5rem; font-size: 1.1rem; }
+  .footer-section ul { list-style: none; margin: 0; padding: 0; }
+  .footer-section a { color: #9cf; }
+}
+
 
 /* =========================================
    LEVEL 2: FLEXBOX LAYOUT
@@ -17,18 +103,17 @@ body[data-layout="flexbox"].level-2 {
   .page-body {
     display: flex;
     align-items: flex-start;
-    gap: 20px;
-    padding: 20px;
-  }
-
-  .sidebar-left,
-  .sidebar-right {
-    flex: 0 0 200px;
-    min-width: 0;
+    gap: var(--gap);
+    padding: var(--pad);
   }
 
   .main-content {
-    flex: 1 1 0;
+    flex: 0 0 70%;
+    min-width: 0;
+  }
+
+  .sidebar-right {
+    flex: 0 0 30%;
     min-width: 0;
   }
 
@@ -43,6 +128,16 @@ body[data-layout="flexbox"].level-2 {
     min-width: 0;
     box-sizing: border-box;
   }
+
+  .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap);
+  }
+  .footer-section {
+    flex: 1 1 calc(50% - var(--gap));
+    min-width: 0;
+  }
 }
 
 
@@ -54,23 +149,19 @@ body[data-layout="grid"].level-2 {
 
   .page-body {
     display: grid;
-    grid-template-columns: 200px minmax(0, 1fr) 200px;
+    grid-template-columns: 7fr 3fr;
     align-items: start;
-    gap: 20px;
-    padding: 20px;
-  }
-
-  .sidebar-left {
-    grid-column: 1;
+    gap: var(--gap);
+    padding: var(--pad);
   }
 
   .main-content {
-    grid-column: 2;
+    grid-column: 1;
     min-width: 0;
   }
 
   .sidebar-right {
-    grid-column: 3;
+    grid-column: 2;
   }
 
   .cards {
@@ -83,6 +174,12 @@ body[data-layout="grid"].level-2 {
     min-width: 0;
     box-sizing: border-box;
   }
+
+  .site-footer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gap);
+  }
 }
 
 
@@ -94,12 +191,15 @@ body[data-layout="grid"].level-2 {
 
   body[data-layout="flexbox"].level-2 {
 
+    .site-nav ul {
+      flex-direction: column;
+    }
+
     .page-body {
       flex-direction: column;
       align-items: stretch;
     }
 
-    .sidebar-left,
     .main-content,
     .sidebar-right {
       width: 100%;
@@ -114,21 +214,36 @@ body[data-layout="grid"].level-2 {
       width: 100%;
       flex-basis: auto;
     }
+
+    .site-footer {
+      flex-direction: column;
+    }
+    .footer-section {
+      width: 100%;
+      flex-basis: auto;
+    }
   }
 
   body[data-layout="grid"].level-2 {
+
+    .site-nav ul {
+      flex-direction: column;
+    }
 
     .page-body {
       grid-template-columns: minmax(0, 1fr);
     }
 
-    .sidebar-left,
     .main-content,
     .sidebar-right {
       grid-column: 1;
     }
 
     .cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .site-footer {
       grid-template-columns: minmax(0, 1fr);
     }
   }
