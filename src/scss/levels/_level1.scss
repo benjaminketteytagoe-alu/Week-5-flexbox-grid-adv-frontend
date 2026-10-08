@@ -1,0 +1,173 @@
+/**
+ * Module: Level 1 Layout
+ * Description: Implements the basic page layout using Flexbox and CSS Grid.
+ *
+ * Flexbox: Body as a flex column with header, main content, and footer.
+ * Grid: Body as a grid with auto/1fr/auto rows.
+ * Responsive: Stacks all sections on smaller screens.
+ */
+
+/* =========================================
+   LEVEL 1: SHARED APPEARANCE
+   ========================================= */
+
+body.level-1 {
+  --gap: clamp(0.5rem, 1.5vw, 1rem);
+  --pad: clamp(0.75rem, 2vw, 1.5rem);
+  --card-min: clamp(12rem, 22vw, 16rem);
+  --color-bg: #f3f4f6;
+  --color-panel: #ffffff;
+  --color-dark: #111827;
+  --color-accent: #2563eb;
+  --color-text: #1f2937;
+  --color-border: #d1d5db;
+
+  font-family: system-ui, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+
+  // Hide nav and sidebars for Level 1 (not part of spec)
+  .site-nav,
+  .sidebar-left,
+  .sidebar-right {
+    display: none;
+  }
+
+  .site-header {
+    padding: var(--pad);
+    background: var(--color-dark);
+    color: #fff;
+  }
+  .logo { color: inherit; font-weight: 700; text-decoration: none; }
+  h1 { margin: 0; font-size: clamp(1rem, 2.5vw, 1.5rem); }
+  .user-menu button {
+    font: inherit;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.25rem;
+    background: var(--color-panel);
+  }
+
+  .main-content {
+    padding: var(--pad);
+    background: var(--color-panel);
+  }
+  .main-content > h2 { margin-top: 0; }
+
+  .card {
+    padding: var(--pad);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+  }
+  .card h3, .card p { margin: 0 0 0.5rem; }
+
+  .site-footer {
+    padding: var(--pad);
+    background: var(--color-dark);
+    color: #fff;
+  }
+  .footer-section h2 { margin: 0 0 0.5rem; font-size: 1.1rem; }
+  .footer-section ul { list-style: none; margin: 0; padding: 0; }
+  .footer-section a { color: #9cf; }
+}
+
+
+/* =========================================
+   LEVEL 1: FLEXBOX LAYOUT
+   ========================================= */
+
+body[data-layout="flexbox"].level-1 {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .site-header {
+    flex: 0 0 auto;
+  }
+
+  .main-content {
+    flex: 1 0 auto;
+  }
+
+  .site-footer {
+    flex: 0 0 auto;
+  }
+
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .card {
+    flex: 1 1 calc(50% - 16px);
+    min-width: 0;
+    box-sizing: border-box;
+  }
+}
+
+
+/* =========================================
+   LEVEL 1: CSS GRID LAYOUT
+   ========================================= */
+
+body[data-layout="grid"].level-1 {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    'header'
+    'main'
+    'footer';
+  min-height: 100vh;
+
+  .site-header {
+    grid-area: header;
+  }
+
+  .main-content {
+    grid-area: main;
+  }
+
+  .site-footer {
+    grid-area: footer;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    min-width: 0;
+    box-sizing: border-box;
+  }
+}
+
+
+/* =========================================
+   RESPONSIVE MOBILE LAYOUT
+   ========================================= */
+
+@media (max-width: 768px) {
+
+  body[data-layout="flexbox"].level-1 {
+
+    .cards {
+      flex-direction: column;
+    }
+
+    .card {
+      width: 100%;
+      flex-basis: auto;
+    }
+  }
+
+  body[data-layout="grid"].level-1 {
+
+    .cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}
