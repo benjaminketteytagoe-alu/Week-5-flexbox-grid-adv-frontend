@@ -1,0 +1,107 @@
+@use '../abstract/variables' as v;
+
+// LEVEL 4, GRID
+body.level-4 {
+  display: grid;
+  min-height: 100vh;
+  gap: var(--gap);
+  grid-template-columns:
+    var(--left-col, var(--sidebar-width))
+    minmax(0, 1fr)
+    var(--right-col, var(--sidebar-width));
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas:
+    'header header header'
+    'nav    nav    nav'
+    'left   main   right'
+    'footer footer footer';
+  transition: grid-template-columns 0.3s ease;
+
+  // Collapse: change the column track from the parent
+  &:has(.sidebar-left.is-collapsed)  { --left-col:  var(--sidebar-collapsed); }
+  &:has(.sidebar-right.is-collapsed) { --right-col: var(--sidebar-collapsed); }
+
+  // page-body disappears so its children join the body grid
+  .page-body { display: contents; }
+
+  .site-header   { grid-area: header; }
+  .site-nav      { grid-area: nav; }
+  .sidebar-left  { grid-area: left; }
+  .main-content  { grid-area: main; min-width: 0; }
+  .sidebar-right { grid-area: right; }
+  .site-footer   { grid-area: footer; }
+
+  // Header: logo | title | user menu
+  .site-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    column-gap: var(--gap);
+  }
+  .user-menu { justify-self: end; }
+
+  // Nav: horizontal row, centred
+  .site-nav ul {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    gap: var(--gap);
+  }
+
+  .sidebar { display: grid; align-content: start; overflow: hidden; }
+  .collapse-btn { justify-self: end; }
+
+  // Cards: reflow with no media query
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min)), 1fr));
+    gap: var(--gap);
+  }
+
+  // Subgrid: card heading and text rows line up across a row of cards
+  @supports (grid-template-rows: subgrid) {
+    .card {
+      display: grid;
+      grid-row: span 2;
+      grid-template-rows: subgrid;
+      row-gap: 0;
+    }
+  }
+
+  // Footer: 3 equal columns
+  .site-footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
+  }
+
+  // Collapsed sidebar on desktop becomes a rail
+  @include v.up(v.$bp-lg-up) {
+    .sidebar.is-collapsed .collapse-btn { justify-self: center; }
+  }
+
+  // Breakpoint 2: tablet. Redefine the areas
+  @include v.down(v.$bp-lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto auto 1fr auto;
+    grid-template-areas:
+      'header header'
+      'nav    nav'
+      'main   main'
+      'left   right'
+      'footer footer';
+  }
+
+  // Breakpoint 3: mobile. Single column
+  @include v.down(v.$bp-md) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(6, auto);
+    grid-template-areas: 'header' 'nav' 'main' 'left' 'right' 'footer';
+  }
+
+  // Breakpoint 4: small phones
+  @include v.down(v.$bp-sm) {
+    .site-nav ul { grid-auto-flow: row; gap: 0; }
+    .site-footer { grid-template-columns: 1fr; }
+  }
+}
