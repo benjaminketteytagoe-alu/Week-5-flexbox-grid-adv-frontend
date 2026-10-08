@@ -1,0 +1,66 @@
+@use '../abstract/variables' as v;
+
+// LEVEL 3: shared appearance. Layout lives in _level3-flex / _level3-grid.
+body.level-3 {
+  --gap: clamp(0.5rem, 1.5vw, 1rem);
+  --pad: clamp(0.75rem, 2vw, 1.5rem);
+  --card-min: clamp(12rem, 22vw, 16rem);
+  --color-bg: #f3f4f6;
+  --color-panel: #ffffff;
+  --color-dark: #111827;
+  --color-accent: #2563eb;
+  --color-text: #1f2937;
+  --color-border: #d1d5db;
+
+  font-family: system-ui, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+
+  // Level 3 has no collapsing sidebars
+  .collapse-btn { display: none; }
+
+  .site-header {
+    padding: var(--pad);
+    background: var(--color-dark);
+    color: #fff;
+  }
+  .logo { color: inherit; font-weight: 700; text-decoration: none; }
+  h1 { margin: 0; font-size: clamp(1rem, 2.5vw, 1.5rem); }
+  .user-menu button {
+    font: inherit;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.25rem;
+    background: var(--color-panel);
+  }
+
+  .site-nav { background: var(--color-accent); }
+  .site-nav ul { list-style: none; margin: 0; padding: 0.5rem var(--pad); }
+  .site-nav a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .sidebar,
+  .main-content {
+    padding: var(--pad);
+    background: var(--color-panel);
+    border: 1px solid var(--color-border);
+  }
+  .main-content > h2 { margin-top: 0; }
+
+  .card {
+    padding: var(--pad);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+  }
+  .card h3, .card p { margin: 0 0 0.5rem; }
+
+  .site-footer { padding: var(--pad); background: var(--color-dark); color: #fff; }
+  .footer-section h2 { margin: 0 0 0.5rem; font-size: 1.1rem; }
+  .footer-section ul { list-style: none; margin: 0; padding: 0; }
+  .footer-section a { color: #9cf; }
+}
