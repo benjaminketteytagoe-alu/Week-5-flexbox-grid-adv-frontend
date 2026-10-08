@@ -1,0 +1,49 @@
+@use '../abstract/variables' as v;
+
+// LEVEL 3, FLEXBOX: header / nav / [left 20% | main 60% | right 20%] / footer
+body.level-3 {
+  display: flex;
+  flex-direction: column;          // outer container stacks the rows
+  min-height: 100vh;
+
+  .site-header {
+    display: flex;                 // nested flex container
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap);
+  }
+
+  .site-nav ul {
+    display: flex;                 // nested flex container
+    justify-content: center;
+    gap: var(--gap);
+  }
+
+  // Middle row: nested flex container, grows to push the footer down
+  .page-body {
+    display: flex;
+    flex: 1 0 auto;
+  }
+  .sidebar { flex: 0 0 20%; }      // no grow, no shrink: exactly 20%
+  .main-content { flex: 0 0 60%; min-width: 0; }
+
+  .cards { display: flex; flex-wrap: wrap; gap: var(--gap); }
+  .card  { flex: 1 1 var(--card-min); }
+
+  .site-footer { display: flex; gap: var(--gap); }
+  .footer-section { flex: 1; }
+
+  // Tablet: main on top, sidebars share the row below as equal columns
+  @include v.down(v.$bp-lg) {
+    .page-body { flex-wrap: wrap; }
+    .main-content { order: -1; flex-basis: 100%; }   // order moves it first
+    .sidebar { flex: 1 1 50%; }
+  }
+
+  // Mobile: everything stacks
+  @include v.down(v.$bp-md) {
+    .sidebar { flex-basis: 100%; }
+    .site-footer { flex-direction: column; }
+    .site-nav ul { flex-direction: column; gap: 0; }
+  }
+}

@@ -1,0 +1,135 @@
+/**
+ * Module: Level 2 Layout
+ * Description: Implements responsive multi-column layouts using
+ * Flexbox and CSS Grid.
+ *
+ * Flexbox: Uses a horizontal flex container on larger screens.
+ * Grid: Uses three columns on larger screens.
+ * Responsive: Stacks the sections on smaller screens.
+ */
+
+/* =========================================
+   LEVEL 2: FLEXBOX LAYOUT
+   ========================================= */
+
+body[data-layout="flexbox"].level-2 {
+
+  .page-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .sidebar-left,
+  .sidebar-right {
+    flex: 0 0 200px;
+    min-width: 0;
+  }
+
+  .main-content {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .card {
+    flex: 1 1 calc(50% - 16px);
+    min-width: 0;
+    box-sizing: border-box;
+  }
+}
+
+
+/* =========================================
+   LEVEL 2: CSS GRID LAYOUT
+   ========================================= */
+
+body[data-layout="grid"].level-2 {
+
+  .page-body {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr) 200px;
+    align-items: start;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .sidebar-left {
+    grid-column: 1;
+  }
+
+  .main-content {
+    grid-column: 2;
+    min-width: 0;
+  }
+
+  .sidebar-right {
+    grid-column: 3;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    min-width: 0;
+    box-sizing: border-box;
+  }
+}
+
+
+/* =========================================
+   RESPONSIVE MOBILE LAYOUT
+   ========================================= */
+
+@media (max-width: 768px) {
+
+  body[data-layout="flexbox"].level-2 {
+
+    .page-body {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .sidebar-left,
+    .main-content,
+    .sidebar-right {
+      width: 100%;
+      flex: 0 0 auto;
+    }
+
+    .cards {
+      flex-direction: column;
+    }
+
+    .card {
+      width: 100%;
+      flex-basis: auto;
+    }
+  }
+
+  body[data-layout="grid"].level-2 {
+
+    .page-body {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .sidebar-left,
+    .main-content,
+    .sidebar-right {
+      grid-column: 1;
+    }
+
+    .cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}
